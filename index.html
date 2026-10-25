@@ -148,7 +148,7 @@ body.reordering,body.reordering *{user-select:none!important;-webkit-user-select
 </div>
 <script>
 (function(){
-  var KEY="leave-home-v2", S, saveOk=true;
+  var KEY="leave-home-v2", S, saveOk=true, appRegistration=null;
   var $=function(i){return document.getElementById(i)};
   function uid(){return Math.random().toString(36).slice(2,9)}
   function load(){
@@ -304,7 +304,7 @@ body.reordering,body.reordering *{user-select:none!important;-webkit-user-select
       '<div class="add"><input id="newItem" placeholder="פריט חדש" enterkeyhint="done" maxlength="60"><button id="addBtn">הוספה</button></div>'+
       '<p class="reorder-hint">לשינוי הסדר: לחיצה ארוכה על ≡ וגרירה למיקום הרצוי</p>'+
       l.items.map(function(it){return '<div class="item" data-id="'+it.id+'"><button class="reorder" aria-label="שינוי מיקום: '+esc(it.t)+'" title="לחיצה ארוכה וגרירה; או חצים למעלה ולמטה">≡</button><input value="'+esc(it.t)+'" maxlength="60"><button class="x" aria-label="מחיקה">×</button></div>'}).join("")+
-      '<div class="tools" style="margin-top:24px">'+(S.lists.length>1?'<button class="ghost danger" id="delList">מחיקת הרשימה</button>':'')+'</div>';
+      '<div class="tools" style="margin-top:24px">'+(S.lists.length>1?'<button class="ghost danger" id="delList">מחיקת הרשימה</button>':'')+'</div><p style="color:var(--mute);font-size:13px">גרסה 4 · אנימציות ועדכון אוטומטי</p>';
     if(focusAdd) $("newItem").focus();
   }
   /* Long-press handles keep text editing and normal list scrolling available. */
@@ -430,13 +430,14 @@ body.reordering,body.reordering *{user-select:none!important;-webkit-user-select
       navigator.serviceWorker.addEventListener("controllerchange",function(){
         if(hadController&&!refreshing){refreshing=true;location.reload()}
       });
-      navigator.serviceWorker.register("sw.js").then(function(reg){reg.update().catch(function(){})}).catch(function(){});
+      navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(reg){appRegistration=reg;reg.update().catch(function(){})}).catch(function(){});
     }
   }
 
   sweep();renderTabs();renderList();checkComplete();
   document.addEventListener("visibilitychange",function(){
     if(document.visibilityState!=="visible") return;
+    if(appRegistration)appRegistration.update().catch(function(){});
     if(sweep()){renderTabs();renderList()}
     checkComplete();
   });
