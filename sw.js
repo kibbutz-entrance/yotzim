@@ -1,4 +1,4 @@
-const C='yotzim-v7',F=['./','index.html','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png'];
+const C='yotzim-v8',F=['./','index.html','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png'];
 const HOME=new URL('index.html',self.registration.scope).href;
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(C).then(c=>c.addAll(F.map(f=>new Request(f,{cache:'reload'})))).then(()=>self.skipWaiting()));

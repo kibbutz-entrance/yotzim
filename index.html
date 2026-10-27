@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-jpCC73Rc5r7v5grzm8obZW3YCvLDRF8UuY9nQhizEiQ='; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Mh3+024KqXDvEatayO/FB9xluIIgXl5svNUQybcHz6M='; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -136,22 +136,22 @@ footer{text-align:center;padding-top:2px}
 #completion{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;isolation:isolate;background:rgba(18,24,21,.38);animation:veil-in .22s ease both;contain:layout style}
 #completion::before{content:"";position:absolute;inset:0;background:var(--bg);opacity:0;z-index:-1;transition:opacity .3s}
 .completion-bubble{position:relative;width:min(86vw,360px);aspect-ratio:1;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;isolation:isolate;will-change:transform,opacity;animation:bubble-in .52s cubic-bezier(.2,1.25,.3,1) both}
-.completion-bubble::before{content:"";position:absolute;inset:0;border-radius:50%;z-index:-1;background:radial-gradient(ellipse at 30% 22%,rgba(255,255,255,.98) 0%,rgba(241,255,249,.97) 28%,rgba(208,246,231,.97) 62%,rgba(172,220,239,.97) 88%,rgba(228,195,243,.97) 100%);border:1px solid rgba(255,255,255,.8);box-shadow:inset -8px -12px 25px rgba(115,167,198,.12),inset 5px 5px 12px rgba(255,255,255,.8),0 18px 45px rgba(0,0,0,.12)}
-.completion-bubble::after{content:"";position:absolute;top:9%;left:17%;width:28%;height:11%;border-radius:50%;background:rgba(255,255,255,.72);transform:rotate(-35deg);pointer-events:none}
+.completion-bubble::before{content:"";position:absolute;inset:0;border-radius:50%;z-index:-1;background:#e1f5eb;border:1px solid rgba(255,255,255,.7);box-shadow:0 16px 38px rgba(0,0,0,.12)}
+
 .bag-orbit{width:68px;height:68px;margin:0 0 10px;display:grid;place-items:center;position:relative}
 .bag-icon{font-size:48px;line-height:1;display:block;animation:bag-float 3.8s ease-in-out infinite;will-change:transform}
-.bubble-satellite{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.8);background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.95),rgba(177,233,218,.5) 70%,rgba(176,201,246,.6));pointer-events:none;animation:satellite-float 4s ease-in-out infinite;will-change:transform}
-.bubble-satellite.one{width:38px;height:38px;top:0;right:0;animation-delay:-1s}
-.bubble-satellite.two{width:20px;height:20px;bottom:9%;left:-2%;animation-delay:-2.5s}
-.bubble-satellite.three{width:12px;height:12px;top:8%;left:8%;animation-delay:-.5s}
+
+
+
+
 .completion-kicker{font-size:14px;color:#52756c;margin:0 0 7px}
 .completion-bubble h2{font-size:clamp(24px,6.6vw,29px);line-height:1.25;letter-spacing:-.03em;margin:0 0 18px;font-weight:650;color:#183e34;max-width:210px;text-wrap:balance}
 #packedYes{border:1px solid rgba(255,255,255,.5);background:#247c59;color:white;border-radius:999px;min-width:128px;min-height:52px;padding:12px 25px;font:inherit;font-size:21px;font-weight:600;cursor:pointer;transition:transform .12s;box-shadow:0 5px 12px rgba(36,124,89,.14)}
 #packedYes:active{transform:scale(.91)}
 #packedYes:focus-visible{outline:3px solid #247c59;outline-offset:5px}
-.pop-hint{font-size:12px;color:#52756c;margin:9px 0 0}
+
 #completion.popped .completion-bubble{pointer-events:none;animation:bubble-pop .3s cubic-bezier(.2,.7,.2,1) both}
-#completion.popped .bag-icon,#completion.popped .bubble-satellite{animation-play-state:paused}
+#completion.popped .bag-icon{animation-play-state:paused}
 .completion-success{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;visibility:hidden;opacity:0;text-align:center;pointer-events:none}
 .completion-success .success-check{width:100px;height:100px;display:grid;place-items:center;border-radius:50%;background:var(--green);color:white;font-size:58px;box-shadow:0 10px 28px rgba(47,158,99,.16)}
 .completion-success h2{font-size:30px;margin:0;color:var(--ink)}
@@ -164,12 +164,12 @@ footer{text-align:center;padding-top:2px}
 @keyframes veil-in{from{opacity:0}to{opacity:1}}
 @keyframes bubble-in{0%{opacity:0;transform:translateY(32px) scale(.65)}65%{opacity:1;transform:translateY(-4px) scale(1.035)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes bag-float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-5px) rotate(3deg)}}
-@keyframes satellite-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
 @keyframes bubble-pop{0%{opacity:1;transform:scale(1)}30%{opacity:1;transform:scale(.89,1.03)}65%{opacity:1;transform:scale(1.14,.97)}100%{opacity:0;transform:scale(1.24)}}
 @keyframes confetti-burst{0%{opacity:0;transform:translate(0,0) scale(.3)}12%{opacity:1}65%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--spin)) scale(.6)}}
 @keyframes success-in{from{opacity:0;transform:translateY(12px) scale(.88)}to{opacity:1;transform:translateY(0) scale(1)}}
-@media (max-height:520px){.completion-bubble{width:min(74vh,320px)}.bag-orbit{height:46px;margin-bottom:4px}.bag-icon{font-size:36px}.completion-bubble h2{font-size:23px;margin-bottom:10px}.pop-hint{display:none}}
-@media (prefers-reduced-motion:reduce){#completion,.completion-bubble,.bag-icon,.bubble-satellite,.completion-success{animation:none!important;transition:none!important}#completion.popped .completion-bubble{opacity:0}}
+@media (max-height:520px){.completion-bubble{width:min(74vh,320px)}.bag-orbit{height:46px;margin-bottom:4px}.bag-icon{font-size:36px}.completion-bubble h2{font-size:23px;margin-bottom:10px}}
+@media (prefers-reduced-motion:reduce){#completion,.completion-bubble,.bag-icon,.completion-success{animation:none!important;transition:none!important}#completion.popped .completion-bubble{opacity:0}}
 
 </style>
 </head>
@@ -193,12 +193,10 @@ footer{text-align:center;padding-top:2px}
 </div>
 <div id="completion" role="dialog" aria-modal="true" aria-labelledby="packingQuestion" hidden>
   <div class="completion-bubble">
-    <span class="bubble-satellite one" aria-hidden="true"></span><span class="bubble-satellite two" aria-hidden="true"></span><span class="bubble-satellite three" aria-hidden="true"></span>
     <div class="bag-orbit" aria-hidden="true"><span class="bag-icon">🎒</span></div>
     <p class="completion-kicker">רגע לפני סיום</p>
     <h2 id="packingQuestion">הכל בתוך התיק?</h2>
     <button id="packedYes">כן! <span aria-hidden="true">✓</span></button>
-    <p class="pop-hint" aria-hidden="true">לחיצה קטנה, ויוצאים ✨</p>
   </div>
   <div id="confetti" aria-hidden="true"></div>
   <div class="completion-success" role="status" aria-live="polite">
@@ -405,7 +403,7 @@ footer{text-align:center;padding-top:2px}
       '<div class="add"><input id="newItem" placeholder="פריט חדש" enterkeyhint="done" maxlength="60"><button id="addBtn">הוספה</button></div>'+
       '<p class="reorder-hint">לשינוי הסדר: לחיצה ארוכה על ≡ וגרירה למיקום הרצוי</p>'+
       l.items.map(function(it){return '<div class="item" data-id="'+it.id+'"><button class="reorder" aria-label="שינוי מיקום: '+esc(it.t)+'" title="לחיצה ארוכה וגרירה; או חצים למעלה ולמטה">≡</button><input value="'+esc(it.t)+'" maxlength="60"><button class="x" aria-label="מחיקה">×</button></div>'}).join("")+
-      '<div class="tools" style="margin-top:24px">'+(S.lists.length>1?'<button class="ghost danger" id="delList">מחיקת הרשימה</button>':'')+'</div><p style="color:var(--mute);font-size:13px">גרסה 7 · בועה קלילה</p>';
+      '<div class="tools" style="margin-top:24px">'+(S.lists.length>1?'<button class="ghost danger" id="delList">מחיקת הרשימה</button>':'')+'</div><p style="color:var(--mute);font-size:13px">גרסה 8 · הכול בתוך התיק</p>';
     if(focusAdd) $("newItem").focus();
   }
   /* Long-press handles keep text editing and normal list scrolling available. */
