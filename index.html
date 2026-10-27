@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-UK4JYBPE3KGF+lL6KN57Ihdom0ugdrdtKkNFwsFkZxw='; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-jpCC73Rc5r7v5grzm8obZW3YCvLDRF8UuY9nQhizEiQ='; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -133,32 +133,43 @@ body.reordering,body.reordering *{user-select:none!important;-webkit-user-select
 .reset{width:auto;height:auto;min-height:40px;padding:8px 16px;border-radius:12px;background:none;color:var(--mute);font-size:14px;font-weight:400}
 footer{text-align:center;padding-top:2px}
 #completion[hidden]{display:none!important}
-#completion{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;background:rgba(18,24,21,.26);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:veil-in .3s ease both}
-.completion-bubble{position:relative;width:min(100%,380px);padding:36px 24px 26px;text-align:center;background:var(--sheet);border:1px solid rgba(128,128,128,.12);border-radius:38px;box-shadow:0 26px 90px rgba(0,0,0,.16);animation:bubble-in .65s cubic-bezier(.22,1.3,.35,1) both;transform-origin:center 65%}
-.bag-orbit{width:106px;height:106px;margin:0 auto 22px;border-radius:50%;display:grid;place-items:center;background:rgba(76,194,131,.12);position:relative}
-.bag-orbit::before{content:"";position:absolute;inset:-9px;border:1px dashed rgba(76,194,131,.3);border-radius:50%;animation:orbit 24s linear infinite}
-.bag-icon{font-size:53px;display:block;animation:bag-float 2.8s ease-in-out infinite}
-.completion-kicker{font-size:15px;color:var(--mute);margin:0 0 10px}
-.completion-bubble h2{font-size:28px;line-height:1.35;letter-spacing:-.02em;margin:0 0 26px;font-weight:600}
-#packedYes{border:0;background:var(--green);color:white;border-radius:22px;width:100%;padding:18px 20px;min-height:60px;font:inherit;font-size:20px;font-weight:600;cursor:pointer;box-shadow:0 7px 20px rgba(47,158,99,.2);transition:transform .15s,box-shadow .15s}
-#packedYes:active{transform:scale(.94);box-shadow:0 2px 5px rgba(47,158,99,.2)}
-#packedYes:focus-visible{outline:3px solid var(--ink);outline-offset:5px}
-#completion.popped .completion-bubble{pointer-events:none;animation:bubble-pop .4s cubic-bezier(.25,.8,.3,1) both}
+#completion{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;isolation:isolate;background:rgba(18,24,21,.38);animation:veil-in .22s ease both;contain:layout style}
+#completion::before{content:"";position:absolute;inset:0;background:var(--bg);opacity:0;z-index:-1;transition:opacity .3s}
+.completion-bubble{position:relative;width:min(86vw,360px);aspect-ratio:1;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;isolation:isolate;will-change:transform,opacity;animation:bubble-in .52s cubic-bezier(.2,1.25,.3,1) both}
+.completion-bubble::before{content:"";position:absolute;inset:0;border-radius:50%;z-index:-1;background:radial-gradient(ellipse at 30% 22%,rgba(255,255,255,.98) 0%,rgba(241,255,249,.97) 28%,rgba(208,246,231,.97) 62%,rgba(172,220,239,.97) 88%,rgba(228,195,243,.97) 100%);border:1px solid rgba(255,255,255,.8);box-shadow:inset -8px -12px 25px rgba(115,167,198,.12),inset 5px 5px 12px rgba(255,255,255,.8),0 18px 45px rgba(0,0,0,.12)}
+.completion-bubble::after{content:"";position:absolute;top:9%;left:17%;width:28%;height:11%;border-radius:50%;background:rgba(255,255,255,.72);transform:rotate(-35deg);pointer-events:none}
+.bag-orbit{width:68px;height:68px;margin:0 0 10px;display:grid;place-items:center;position:relative}
+.bag-icon{font-size:48px;line-height:1;display:block;animation:bag-float 3.8s ease-in-out infinite;will-change:transform}
+.bubble-satellite{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.8);background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.95),rgba(177,233,218,.5) 70%,rgba(176,201,246,.6));pointer-events:none;animation:satellite-float 4s ease-in-out infinite;will-change:transform}
+.bubble-satellite.one{width:38px;height:38px;top:0;right:0;animation-delay:-1s}
+.bubble-satellite.two{width:20px;height:20px;bottom:9%;left:-2%;animation-delay:-2.5s}
+.bubble-satellite.three{width:12px;height:12px;top:8%;left:8%;animation-delay:-.5s}
+.completion-kicker{font-size:14px;color:#52756c;margin:0 0 7px}
+.completion-bubble h2{font-size:clamp(24px,6.6vw,29px);line-height:1.25;letter-spacing:-.03em;margin:0 0 18px;font-weight:650;color:#183e34;max-width:210px;text-wrap:balance}
+#packedYes{border:1px solid rgba(255,255,255,.5);background:#247c59;color:white;border-radius:999px;min-width:128px;min-height:52px;padding:12px 25px;font:inherit;font-size:21px;font-weight:600;cursor:pointer;transition:transform .12s;box-shadow:0 5px 12px rgba(36,124,89,.14)}
+#packedYes:active{transform:scale(.91)}
+#packedYes:focus-visible{outline:3px solid #247c59;outline-offset:5px}
+.pop-hint{font-size:12px;color:#52756c;margin:9px 0 0}
+#completion.popped .completion-bubble{pointer-events:none;animation:bubble-pop .3s cubic-bezier(.2,.7,.2,1) both}
+#completion.popped .bag-icon,#completion.popped .bubble-satellite{animation-play-state:paused}
 .completion-success{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;visibility:hidden;opacity:0;text-align:center;pointer-events:none}
-.completion-success .success-check{width:112px;height:112px;display:grid;place-items:center;border-radius:50%;background:var(--green);color:white;font-size:64px;box-shadow:0 10px 50px rgba(47,158,99,.24)}
-.completion-success h2{font-size:32px;margin:0;color:var(--ink)}
-#completion.celebrated{background:var(--bg);transition:background .4s}
-#completion.celebrated .completion-success{visibility:visible;opacity:1;animation:success-in .65s cubic-bezier(.16,1.4,.3,1) both}
-#confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.confetti-piece{position:absolute;top:50%;left:50%;width:9px;height:15px;border-radius:3px;animation:confetti-burst 1s cubic-bezier(.12,.65,.25,1) both}
+.completion-success .success-check{width:100px;height:100px;display:grid;place-items:center;border-radius:50%;background:var(--green);color:white;font-size:58px;box-shadow:0 10px 28px rgba(47,158,99,.16)}
+.completion-success h2{font-size:30px;margin:0;color:var(--ink)}
+#completion.celebrated::before{opacity:1}
+#completion.celebrated .completion-success{visibility:visible;opacity:1;animation:success-in .45s cubic-bezier(.16,1.3,.3,1) both}
+#confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;contain:strict}
+.confetti-piece{position:absolute;top:50%;left:50%;width:8px;height:12px;border-radius:50%;opacity:0}
+.confetti-piece:nth-child(3n){height:8px;background:transparent!important;border:2px solid #70bfa2}
+#completion.popped .confetti-piece{animation:confetti-burst .8s cubic-bezier(.12,.65,.25,1) both}
 @keyframes veil-in{from{opacity:0}to{opacity:1}}
-@keyframes bubble-in{0%{opacity:0;transform:translateY(38px) scale(.75) rotate(-3deg)}65%{opacity:1;transform:translateY(-5px) scale(1.035) rotate(1deg)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
-@keyframes bag-float{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-7px) rotate(4deg)}}
-@keyframes orbit{to{transform:rotate(360deg)}}
-@keyframes bubble-pop{0%{opacity:1;transform:scale(1)}28%{opacity:1;transform:scale(.92)}60%{opacity:1;transform:scale(1.13)}100%{opacity:0;transform:scale(1.32)}}
-@keyframes confetti-burst{0%{opacity:0;transform:translate(0,0) scale(.2)}12%{opacity:1}75%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--spin)) scale(.7)}}
-@keyframes success-in{from{opacity:0;transform:translateY(15px) scale(.8)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){#completion,.completion-bubble,.bag-icon,.bag-orbit::before,.completion-success{animation:none!important;transition:none!important}#completion.popped .completion-bubble{opacity:0}}
+@keyframes bubble-in{0%{opacity:0;transform:translateY(32px) scale(.65)}65%{opacity:1;transform:translateY(-4px) scale(1.035)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes bag-float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-5px) rotate(3deg)}}
+@keyframes satellite-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes bubble-pop{0%{opacity:1;transform:scale(1)}30%{opacity:1;transform:scale(.89,1.03)}65%{opacity:1;transform:scale(1.14,.97)}100%{opacity:0;transform:scale(1.24)}}
+@keyframes confetti-burst{0%{opacity:0;transform:translate(0,0) scale(.3)}12%{opacity:1}65%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--spin)) scale(.6)}}
+@keyframes success-in{from{opacity:0;transform:translateY(12px) scale(.88)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media (max-height:520px){.completion-bubble{width:min(74vh,320px)}.bag-orbit{height:46px;margin-bottom:4px}.bag-icon{font-size:36px}.completion-bubble h2{font-size:23px;margin-bottom:10px}.pop-hint{display:none}}
+@media (prefers-reduced-motion:reduce){#completion,.completion-bubble,.bag-icon,.bubble-satellite,.completion-success{animation:none!important;transition:none!important}#completion.popped .completion-bubble{opacity:0}}
 
 </style>
 </head>
@@ -182,10 +193,12 @@ footer{text-align:center;padding-top:2px}
 </div>
 <div id="completion" role="dialog" aria-modal="true" aria-labelledby="packingQuestion" hidden>
   <div class="completion-bubble">
+    <span class="bubble-satellite one" aria-hidden="true"></span><span class="bubble-satellite two" aria-hidden="true"></span><span class="bubble-satellite three" aria-hidden="true"></span>
     <div class="bag-orbit" aria-hidden="true"><span class="bag-icon">🎒</span></div>
     <p class="completion-kicker">רגע לפני סיום</p>
     <h2 id="packingQuestion">הכל בתוך התיק?</h2>
     <button id="packedYes">כן! <span aria-hidden="true">✓</span></button>
+    <p class="pop-hint" aria-hidden="true">לחיצה קטנה, ויוצאים ✨</p>
   </div>
   <div id="confetti" aria-hidden="true"></div>
   <div class="completion-success" role="status" aria-live="polite">
@@ -230,8 +243,9 @@ footer{text-align:center;padding-top:2px}
     var positions=rows.map(function(r){return r.getBoundingClientRect().top});
     rows.forEach(function(r){if(r._shift){r._shift.cancel();r._shift=null}});
     change();
+    var destinations=rows.map(function(r){return r.getBoundingClientRect().top});
     rows.forEach(function(r,i){
-      var dy=positions[i]-r.getBoundingClientRect().top;
+      var dy=positions[i]-destinations[i];
       if(Math.abs(dy)>.5){
         if(r._shift)r._shift.cancel();
         r._shift=motion(r,[{transform:"translateY("+dy+"px)"},{transform:"translateY(0)"}],360);
@@ -247,7 +261,8 @@ footer{text-align:center;padding-top:2px}
     var ordered=items.filter(function(it){return !it.d||pendingMoves[it.id]}).concat(
       items.filter(function(it){return it.d&&!pendingMoves[it.id]}).sort(function(a,b){return (a.checkedAt||0)-(b.checkedAt||0)}));
     flipRows(Array.from(m.querySelectorAll(".row")),function(){
-      ordered.forEach(function(it){var row=m.querySelector('[data-id="'+it.id+'"]');if(row)m.appendChild(row)});
+      var nodes={};Array.from(m.children).forEach(function(row){nodes[row.getAttribute("data-id")]=row});
+      ordered.forEach(function(it,i){var row=nodes[it.id];if(row&&m.children[i]!==row)m.insertBefore(row,m.children[i]||null)});
     });
   }
   function queueMove(it,el){
@@ -324,24 +339,26 @@ footer{text-align:center;padding-top:2px}
   function showCompletion(){
     completionPhase="confirm";completionList=cur().id;completionFocus=document.activeElement;
     $("completion").className="";$("completion").hidden=false;
+    if(!reducedMotion()){
+      var fragment=document.createDocumentFragment();
+      var colors=["#4cc283","#ffd982","#a6c9ff","#f3a8be","#9be2cf"];
+      for(var i=0;i<16;i++){
+        var piece=document.createElement("span");piece.className="confetti-piece";
+        var angle=Math.PI*2*i/16,distance=90+Math.random()*140;
+        piece.style.setProperty("--dx",Math.cos(angle)*distance+"px");
+        piece.style.setProperty("--dy",Math.sin(angle)*distance+"px");
+        piece.style.setProperty("--spin",(Math.random()*600-300)+"deg");
+        piece.style.background=colors[i%colors.length];piece.style.animationDelay=(Math.random()*70)+"ms";
+        fragment.appendChild(piece);
+      }
+      $("confetti").appendChild(fragment);
+    }
     $("app").inert=true;$("packedYes").disabled=false;$("packedYes").focus({preventScroll:true});
   }
   function confirmPacked(){
     if(completionPhase!=="confirm"||completionList!==cur().id||!allDone(cur()))return;
     completionPhase="celebrating";$("packedYes").disabled=true;
     $("completion").classList.add("popped");
-    if(!reducedMotion()){
-      var colors=["#4cc283","#ffd982","#a6c9ff","#f3a8be","#9be2cf"];
-      for(var i=0;i<26;i++){
-        var piece=document.createElement("span");piece.className="confetti-piece";
-        var angle=Math.PI*2*i/26,distance=100+Math.random()*170;
-        piece.style.setProperty("--dx",Math.cos(angle)*distance+"px");
-        piece.style.setProperty("--dy",Math.sin(angle)*distance+"px");
-        piece.style.setProperty("--spin",(Math.random()*600-300)+"deg");
-        piece.style.background=colors[i%colors.length];piece.style.animationDelay=(Math.random()*70)+"ms";
-        $("confetti").appendChild(piece);
-      }
-    }
     celebrationTimer=setTimeout(function(){
       if(completionPhase!=="celebrating")return;
       $("completion").classList.add("celebrated");
@@ -349,7 +366,7 @@ footer{text-align:center;padding-top:2px}
         var id=completionList;hideCompletion();
         if(cur().id===id){resetCurrent();$("list").scrollTop=0;$("edit").focus({preventScroll:true})}
       },1900);
-    },reducedMotion()?50:380);
+    },reducedMotion()?50:250);
   }
   $("packedYes").onclick=confirmPacked;
   $("completion").addEventListener("keydown",function(e){
@@ -388,7 +405,7 @@ footer{text-align:center;padding-top:2px}
       '<div class="add"><input id="newItem" placeholder="פריט חדש" enterkeyhint="done" maxlength="60"><button id="addBtn">הוספה</button></div>'+
       '<p class="reorder-hint">לשינוי הסדר: לחיצה ארוכה על ≡ וגרירה למיקום הרצוי</p>'+
       l.items.map(function(it){return '<div class="item" data-id="'+it.id+'"><button class="reorder" aria-label="שינוי מיקום: '+esc(it.t)+'" title="לחיצה ארוכה וגרירה; או חצים למעלה ולמטה">≡</button><input value="'+esc(it.t)+'" maxlength="60"><button class="x" aria-label="מחיקה">×</button></div>'}).join("")+
-      '<div class="tools" style="margin-top:24px">'+(S.lists.length>1?'<button class="ghost danger" id="delList">מחיקת הרשימה</button>':'')+'</div><p style="color:var(--mute);font-size:13px">גרסה 6 · הכול בתוך התיק</p>';
+      '<div class="tools" style="margin-top:24px">'+(S.lists.length>1?'<button class="ghost danger" id="delList">מחיקת הרשימה</button>':'')+'</div><p style="color:var(--mute);font-size:13px">גרסה 7 · בועה קלילה</p>';
     if(focusAdd) $("newItem").focus();
   }
   /* Long-press handles keep text editing and normal list scrolling available. */
